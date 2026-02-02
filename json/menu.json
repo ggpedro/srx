@@ -1,0 +1,158 @@
+[
+    {
+        "secao_id": "cc",
+        "secao_label": "Centros de Competências",
+        "itens": [
+            {
+                "item": "conquistas",
+                "label": "Conquistas",
+                "logo": "",
+                "endpoint": "",
+                "itens": [
+                    {
+                        "item": "pi",
+                        "label": "PI",
+                        "logo": "",
+                        "endpoint": "",
+                        "itens": []
+                    },
+                    {
+                        "item": "artigos",
+                        "label": "Artigos",
+                        "logo": "",
+                        "endpoint": "",
+                        "itens": []
+                    },
+                    {
+                        "item": "associacao",
+                        "label": "Associação",
+                        "logo": "",
+                        "endpoint": "",
+                        "itens": []
+                    }
+
+                ]
+            },
+            {
+                "item": "pessoal",
+                "label": "Pessoal",
+                "logo": "",
+                "endpoint": "",
+                "itens": []
+            },    
+            {
+                "item": "infra",
+                "label": "Infra",
+                "logo": "",
+                "endpoint": "",
+                "itens": []
+            }
+        ]
+    }
+    ,{
+        "secao_id": "ue",
+        "secao_label": "Unidades Embrapii",
+        "itens": [
+            {
+                "item": "prospeccao",
+                "label": "Prospecção",
+                "logo": "",
+                "endpoint": "",
+                "itens": [
+                    {
+                        "item": "eventos",
+                        "label": "Eventos",
+                        "logo": "",
+                        "endpoint": "",
+                        "itens": [
+                            {
+                                "item": "teste1",
+                                "label": "Teste 1",
+                                "logo": "",
+                                "endpoint": "",
+                                "itens": []
+                            },
+                            {
+                                "item": "teste2",
+                                "label": "Teste 2",
+                                "logo": "",
+                                "endpoint": "",
+                                "itens": []
+                            }
+                        ]
+                    },
+                    {
+                        "item": "comunicacoes",
+                        "label": "Comunicações",
+                        "logo": "",
+                        "endpoint": "",
+                        "itens": []
+                    }
+                ]
+            },
+            {
+                "item": "negociacoes",
+                "label": "Negociações",
+                "logo": "",
+                "endpoint": "",
+                "itens": []
+            }
+        ]
+    }
+    ,{
+        "secao_id": "e",
+        "secao_label": "Embrapii",
+        "itens": [
+            {
+                "item": "adm",
+                "label": "Administração",
+                "logo": "",
+                "endpoint": "",
+                "itens": [
+                    {
+                        "item": "infra",
+                        "label": "Infra",
+                        "logo": "",
+                        "endpoint": "",
+                        "itens": []
+                    },
+                    {
+                        "item": "pessoal",
+                        "label": "Pessoal",
+                        "logo": "",
+                        "endpoint": "",
+                        "itens": []
+                    }    
+                ]
+            }
+        ]
+    }
+    ,{
+        "secao_id": "srx",
+        "secao_label": "SRX",
+        "itens": [
+            {
+                "item": "mod",
+                "label": "Moderação",
+                "logo": "",
+                "endpoint": "",
+                "itens": [
+                    {
+                        "item": "organizacoes",
+                        "label": "Organizações",
+                        "logo": "",
+                        "endpoint": "",
+                        "itens": []
+                    },
+                    {
+                        "item": "usuarios",
+                        "label": "Usuários",
+                        "logo": "",
+                        "endpoint": "",
+                        "itens": []
+                    }    
+                ]
+            }
+        ]
+    }
+]
