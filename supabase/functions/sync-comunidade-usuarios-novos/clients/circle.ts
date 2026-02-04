@@ -1,8 +1,8 @@
-// import {CircleClientInterface} from '../../../interfaces/circle.ts'
+import {PaginatedResponse} from '../../../interfaces/circle.ts'
 
-export class CircleClient {
+export class CircleClient  {
   
-  static async fetchMembers (){
+  static async fetchMembers () :Promise<PaginatedResponse> {
     const path = new URL(import.meta.url).pathname;       // Path para debug
 
     const myHeaders = new Headers();
@@ -30,7 +30,7 @@ export class CircleClient {
       throw new Error(`Erro na API: ${response.status}`);
     }
     
-    const members = await response.json();
+    const members : PaginatedResponse = await response.json();
     // console.log(members);
     return members;
   }

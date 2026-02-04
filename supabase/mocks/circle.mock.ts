@@ -1,5 +1,7 @@
+import {PaginatedResponse} from '../interfaces/circle.ts'
+
 export const MockMembers  = {
-  async fetchMembers() {
+  async fetchMembers() : Promise<PaginatedResponse> {
     console.log("🧪 Dados mockados utilizados!");
     return {
     "page": 1,

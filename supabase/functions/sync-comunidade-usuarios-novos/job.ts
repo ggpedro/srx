@@ -11,9 +11,10 @@
 
 import {identificarNovosUsuarios} from './tasks/01_identificarNovosUsuarios.ts'
 import { CircleClient } from "./clients/circle.ts";
+import {CircleClientInterface} from '../../interfaces/circle.ts'
 
 export async function job (
-    client : typeof CircleClient       // Default. Caso informado um mock, ele será utilizado
+    client : CircleClientInterface = CircleClient        // Default. Caso informado um mock, ele será utilizado
 ){
     const novosUsuarios = await identificarNovosUsuarios(client);
     return novosUsuarios;
