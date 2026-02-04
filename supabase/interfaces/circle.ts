@@ -13,7 +13,7 @@ export interface PaginatedResponse {
 
 export interface UserRecord {
   first_name: string;
-  last_name: string;
+  last_name: string | null;
   headline: string | null;
   created_at: string;
   updated_at: string;
@@ -76,13 +76,13 @@ export interface ProfilePage {
 }
 
 export interface FlattenedProfileFields {
-  bio: string;
-  location: string;
-  instagram_url: string;
-  linkedin_url: string;
-  profession: string | null;
-  birthday: string | null;
-  company: string | null;
+  bio?: string | null;
+  location?: string | null;
+  instagram_url?: string | null;
+  linkedin_url?: string | null;
+  profession?: string | null;
+  birthday?: string | null;
+  company?: string | null;
 }
 
 export interface GamificationStats {

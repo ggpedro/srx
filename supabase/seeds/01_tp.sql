@@ -32,38 +32,39 @@ VALUES
 ;
 
 
-INSERT INTO GERAL.TP_ORGANIZACAO (
-    SG_ORGANIZACAO
-    , NO_ORGANIZACAO
-    , DS_ORGANIZACAO
+INSERT INTO GERAL.TP_ORGANIZACAO_TIPO (
+    SG_ORGANIZACAO_TIPO
+    , NO_ORGANIZACAO_TIPO
+    , DS_ORGANIZACAO_TIPO
     , SG_ESFERA_PUBLICA
+    , CO_COMUNIDADE_TAG
 )
 
 VALUES 
     -- Financiados
-    ('IE', 'Embrapii', 'Administração Embrapii', NULL)
-    , ('IE_CC', 'Centro de Competência', 'Centro de Competência da Rede Embrapii', NULL)
-    , ('IE_UE', 'Unidade Embrapii', 'Unidade da Rede Embrapii', NULL)
+    ('IE', 'Embrapii', 'Administração Embrapii', NULL, NULL)
+    , ('IE_CC', 'Centro de Competência', 'Centro de Competência da Rede Embrapii', NULL, 208105)
+    , ('IE_UE', 'Unidade Embrapii', 'Unidade da Rede Embrapii', NULL, 219763)
 
     -- Instituições
-    , ('ICT', 'Instituição de Ciência e Tecnologia', 'Instituição que realiza o desenvolvimento técnico científico', NULL)
-    , ('IES', 'Instituição de Ensino Superior', 'Instituição que realiza a formação de mão de obra superior', NULL)
+    , ('ICT', 'Instituição de Ciência e Tecnologia', 'Instituição que realiza o desenvolvimento técnico científico', NULL, NULL)
+    , ('IES', 'Instituição de Ensino Superior', 'Instituição que realiza a formação de mão de obra superior', NULL, NULL)
     
     -- Financiadores
-    , ('GOV1_F', 'Governo Federal', 'Governo Federal', 'F')
-    , ('GOV2_E', 'Governo Estadual', 'Governo Estadual', 'E')
-    , ('GOV3_M', 'Governo Municipal', 'Governo Municipal', 'M')
+    , ('GOV1_F', 'Governo Federal', 'Governo Federal', 'F', NULL)
+    , ('GOV2_E', 'Governo Estadual', 'Governo Estadual', 'E', NULL)
+    , ('GOV3_M', 'Governo Municipal', 'Governo Municipal', 'M', NULL)
 
-    , ('MF', 'Ministério Federal', 'Ministérios da Esfera Federal', 'F')
-    , ('BP_F', 'Banco Público Federal', 'Banco público federal', 'F')
-    , ('BP_E', 'Banco Público Estadual', 'Banco público estadual', 'E')
+    , ('MF', 'Ministério Federal', 'Ministérios da Esfera Federal', 'F', NULL)
+    , ('BP_F', 'Banco Público Federal', 'Banco público federal', 'F', NULL)
+    , ('BP_E', 'Banco Público Estadual', 'Banco público estadual', 'E', NULL)
     
     -- Associados
-    , ('E1_MEI', 'Microempreendedor Individual', 'MEI', NULL)
-    , ('E2_MI', 'Micro empresa', 'Empresa MICRO', NULL)
-    , ('E3_P', 'Pequena empresa', 'Empresa PEQUENA', NULL)
-    , ('E4_M', 'Média empresa', 'Empresa MÉDIA', NULL)
-    , ('E5_M', 'Grande empresa', 'Empresa GRANDE', NULL)
+    , ('E1_MEI', 'Microempreendedor Individual', 'MEI', NULL, NULL)
+    , ('E2_MI', 'Micro empresa', 'Empresa MICRO', NULL, NULL)
+    , ('E3_P', 'Pequena empresa', 'Empresa PEQUENA', NULL, NULL)
+    , ('E4_M', 'Média empresa', 'Empresa MÉDIA', NULL, NULL)
+    , ('E5_M', 'Grande empresa', 'Empresa GRANDE', NULL, NULL)
 ;
 
 -- INSERT INTO GERAL.TP_ACAO_APP (
@@ -80,13 +81,3 @@ VALUES
 --     , ('E', 'Exportar', 'Permite exportar dados, se tiver a funcionalidade')
 --     , ('P', 'Imprimir', 'Permite imprimir a página, se tiver a funcionalidade')
 -- ;
-
-
-INSERT INTO GERAL.TP_ORGANIZACAO_EMBRAPII (
-    SG_ORGANIZACAO_EMBRAPII
-    , NO_ORGANIZACAO_EMBRAPII
-) VALUES
-
-    ('CC', 'Centro de Competência')
-    , ('UE', 'Unindade Embrapii')
-;
