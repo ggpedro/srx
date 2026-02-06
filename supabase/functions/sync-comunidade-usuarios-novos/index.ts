@@ -1,17 +1,27 @@
 import "@supabase/functions-js/edge-runtime.d.ts"
-import { MockMembers } from "../../mocks/circle.mock.ts";
+import { MockMembers } from "../mocks/circle.mock.ts";
 import { job } from "./job.ts"
 
 
-Deno.serve(async () => {
+Deno.serve(async (req) => {
   try {
-    const resultado = await job(MockMembers);
+    const headers : Headers = req.headers;
+      const headerJobTipo = headers.get('jobTipo');
+    const jobTipo : number = headerJobTipo ? parseInt(headerJobTipo) || 0 : 0;
 
-    return new Response(
-      JSON.stringify({ resultado }),
-      { status: 200 }
-    );
-  } catch (error) {
+  if (jobTipo < 1 && jobTipo > 2) {
+    throw new Error('Job inválido. Informe opção: 1/2');
+  }
+  
+  const resultado = await job(jobTipo, MockMembers);
+    
+
+  return new Response(
+    JSON.stringify({ resultado }),
+    { status: 200 }
+  );
+
+} catch (error) {
     console.error(error);
 
     return new Response(

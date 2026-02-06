@@ -10,12 +10,37 @@
 */
 
 import {identificarNovosUsuarios} from './tasks/01_identificarNovosUsuarios.ts'
-import { CircleClient } from "./clients/circle.ts";
-import {CircleClientInterface} from '../../interfaces/circle.ts'
+// import {temp} from './tasks/temp.ts'
+import {CircleClient} from "../clients/circle.ts";
+import {CircleClientInterface} from '../interfaces/circleInterface.ts'
+
+enum JobTipo {
+    REGISTRAR_USUARIOS_NOVOS = 1                // Registrar usuários novos na comunidade, não cadastrados no SRX
+    , CONFIGURAR_USUARIOS_NOVOS = 2             // Obter um lote de usuários, sem atualização, lockar e atualizar um a um
+    , TEMP = 3                                  // Scripts temporários
+}
 
 export async function job (
-    client : CircleClientInterface = CircleClient        // Default. Caso informado um mock, ele será utilizado
+    jobTipo : JobTipo 
+    , client : CircleClientInterface = CircleClient        // Default. Caso informado um mock, ele será utilizado
 ){
-    const novosUsuarios = await identificarNovosUsuarios(client);
-    return novosUsuarios;
+    switch (jobTipo) {
+        case JobTipo.REGISTRAR_USUARIOS_NOVOS: {
+            const novosUsuarios = await identificarNovosUsuarios(client);
+            return novosUsuarios;
+        }
+            
+        case JobTipo.CONFIGURAR_USUARIOS_NOVOS: {
+            const atualizacoes = {};
+            return atualizacoes;
+        }
+
+        // case JobTipo.TEMP: {
+        //     const e = await temp();
+        //     return e;
+        // }
+            
+        default:
+            throw new Error(`Job tipo inválido`);
+    }
 }
