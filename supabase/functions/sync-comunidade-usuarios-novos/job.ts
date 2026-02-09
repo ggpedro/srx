@@ -10,7 +10,9 @@
 */
 
 import {identificarNovosUsuarios} from './tasks/01_identificarNovosUsuarios.ts'
+import { identificarPerfis } from "./tasks/02_sincronizarNovosPerfis.ts";
 // import {temp} from './tasks/temp.ts'
+
 import {CircleClient} from "../clients/circle.ts";
 import {CircleClientInterface} from '../interfaces/circleInterface.ts'
 
@@ -31,7 +33,7 @@ export async function job (
         }
             
         case JobTipo.CONFIGURAR_USUARIOS_NOVOS: {
-            const atualizacoes = {};
+            const atualizacoes = identificarPerfis();
             return atualizacoes;
         }
 
