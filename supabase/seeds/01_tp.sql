@@ -38,46 +38,33 @@ INSERT INTO GERAL.TP_ORGANIZACAO_TIPO (
     , DS_ORGANIZACAO_TIPO
     , SG_ESFERA_PUBLICA
     , CO_COMUNIDADE_TAG
+    , CO_COMUNIDADE_PERFIL
 )
 
 VALUES 
     -- Financiados
-    ('IE', 'Embrapii', 'Administração Embrapii', NULL, NULL)
-    , ('IE_CC', 'Centro de Competência', 'Centro de Competência da Rede Embrapii', NULL, 208105)
-    , ('IE_UE', 'Unidade Embrapii', 'Unidade da Rede Embrapii', NULL, 219763)
+    ('IE', 'Embrapii', 'Administração Embrapii', NULL, 220804, 87911)
+    , ('IE_CC', 'Centro de Competência', 'Centro de Competência da Rede Embrapii', NULL, 208105, 76274)
+    , ('IE_UE', 'Unidade Embrapii', 'Unidade da Rede Embrapii', NULL, 219763, 76276)
 
     -- Instituições
-    , ('ICT', 'Instituição de Ciência e Tecnologia', 'Instituição que realiza o desenvolvimento técnico científico', NULL, NULL)
-    , ('IES', 'Instituição de Ensino Superior', 'Instituição que realiza a formação de mão de obra superior', NULL, NULL)
+    , ('ICT', 'Instituição de Ciência e Tecnologia', 'Instituição que realiza o desenvolvimento técnico científico', NULL, NULL, NULL)
+    , ('IES', 'Instituição de Ensino Superior', 'Instituição que realiza a formação de mão de obra superior', NULL, NULL, NULL)
     
     -- Financiadores
-    , ('GOV1_F', 'Governo Federal', 'Governo Federal', 'F', NULL)
-    , ('GOV2_E', 'Governo Estadual', 'Governo Estadual', 'E', NULL)
-    , ('GOV3_M', 'Governo Municipal', 'Governo Municipal', 'M', NULL)
+    , ('GOV1_F', 'Governo Federal', 'Governo Federal', 'F', NULL, NULL)
+    , ('GOV2_E', 'Governo Estadual', 'Governo Estadual', 'E', NULL, NULL)
+    , ('GOV3_M', 'Governo Municipal', 'Governo Municipal', 'M', NULL, NULL)
 
-    , ('MF', 'Ministério Federal', 'Ministérios da Esfera Federal', 'F', NULL)
-    , ('BP_F', 'Banco Público Federal', 'Banco público federal', 'F', NULL)
-    , ('BP_E', 'Banco Público Estadual', 'Banco público estadual', 'E', NULL)
+    , ('MF', 'Ministério Federal', 'Ministérios da Esfera Federal', 'F', NULL, NULL)
+    , ('BP_F', 'Banco Público Federal', 'Banco público federal', 'F', NULL, NULL)
+    , ('BP_E', 'Banco Público Estadual', 'Banco público estadual', 'E', NULL, NULL)
     
     -- Associados
-    , ('E1_MEI', 'Microempreendedor Individual', 'MEI', NULL, NULL)
-    , ('E2_MI', 'Micro empresa', 'Empresa MICRO', NULL, NULL)
-    , ('E3_P', 'Pequena empresa', 'Empresa PEQUENA', NULL, NULL)
-    , ('E4_M', 'Média empresa', 'Empresa MÉDIA', NULL, NULL)
-    , ('E5_M', 'Grande empresa', 'Empresa GRANDE', NULL, NULL)
+    , ('E1_MEI', 'Microempreendedor Individual', 'MEI', NULL, NULL, NULL)
+    , ('E2_MI', 'Micro empresa', 'Empresa MICRO', NULL, NULL, NULL)
+    , ('E3_P', 'Pequena empresa', 'Empresa PEQUENA', NULL, NULL, NULL)
+    , ('E4_M', 'Média empresa', 'Empresa MÉDIA', NULL, NULL, NULL)
+    , ('E5_M', 'Grande empresa', 'Empresa GRANDE', NULL, NULL, NULL)
 ;
 
--- INSERT INTO GERAL.TP_ACAO_APP (
---     SG_ACAO_APP
---     , NO_ACAO_APP
---     , DS_ACAO_APP
--- ) VALUES
-
---     ('C', 'Adicionar', 'Permite adicionar novos dados')
---     , ('R', 'Ler/Visualizar', 'Permite visualizar os dados')
---     , ('U', 'Atualizar', 'Permite atualizar os dados')
---     , ('D', 'Deletar', 'Permite deletar os dados')
---     , ('I', 'Importar', 'Permite importar dados, se tiver a funcionalidade')
---     , ('E', 'Exportar', 'Permite exportar dados, se tiver a funcionalidade')
---     , ('P', 'Imprimir', 'Permite imprimir a página, se tiver a funcionalidade')
--- ;

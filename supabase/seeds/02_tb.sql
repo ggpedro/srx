@@ -124,3 +124,8 @@ VALUES
   , (220921, NULL, 'VBL IoT E INDÚSTRIA 4.0 - Von Braun', 'VBL IoT E INDÚSTRIA 4.0 - Von Braun', 'IE_UE')
   , (220922, NULL, 'ZETTA-UFLA', 'ZETTA-UFLA', 'IE_UE')
 ;
+
+
+/*
+    ASSOCIADOS
+*/

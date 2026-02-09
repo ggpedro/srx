@@ -1,3 +1,5 @@
+// import { mockErrors } from "asset:///node/undici/index.d.ts";
+
 export interface CircleClientInterface {
   fetchUsuarios(): Promise<PaginatedResponse>;
 }
@@ -35,7 +37,12 @@ export interface UserRecord {
   posts_count: number;
   comments_count: number;
   gamification_stats: GamificationStats;
-  member_tags: any[]; // Substituir por interface específica se houver dados
+  member_tags: MemberTag[]; // Substituir por interface específica se houver dados
+}
+
+export interface MemberTag{
+  name: string,
+  id: number
 }
 
 export interface ProfileField {
