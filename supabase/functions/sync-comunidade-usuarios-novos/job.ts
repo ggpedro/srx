@@ -19,12 +19,12 @@ import {CircleClientInterface} from '../interfaces/circleInterface.ts'
 enum JobTipo {
     REGISTRAR_USUARIOS_NOVOS = 1                // Registrar usuários novos na comunidade, não cadastrados no SRX
     , CONFIGURAR_USUARIOS_NOVOS = 2             // Obter um lote de usuários, sem atualização, lockar e atualizar um a um
-    , TEMP = 3                                  // Scripts temporários
+    // , TEMP = 3                                  // Scripts temporários
 }
 
 export async function job (
     jobTipo : JobTipo 
-    , client : CircleClientInterface = CircleClient        // Default. Caso informado um mock, ele será utilizado
+    , client : CircleClientInterface = new CircleClient()        // Default. Caso informado um mock, ele será utilizado
 ){
     switch (jobTipo) {
         case JobTipo.REGISTRAR_USUARIOS_NOVOS: {
@@ -33,7 +33,7 @@ export async function job (
         }
             
         case JobTipo.CONFIGURAR_USUARIOS_NOVOS: {
-            const atualizacoes = identificarPerfis();
+            const atualizacoes = await identificarPerfis();
             return atualizacoes;
         }
 

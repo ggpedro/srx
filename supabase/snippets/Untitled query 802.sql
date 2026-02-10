@@ -1,0 +1,1 @@
+SELECT * FROM geral.vw_atualizacoes_usuarios_comunidade_pendente

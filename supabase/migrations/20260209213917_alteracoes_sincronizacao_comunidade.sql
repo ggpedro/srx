@@ -28,23 +28,35 @@ alter table "geral"."tb_comunidade_usuario" add constraint "tb_comunidade_usuari
 
 alter table "geral"."tb_pessoa_fisica" add constraint "tb_pessoa_fisica_co_cpf_key" UNIQUE using index "tb_pessoa_fisica_co_cpf_key";
 
-alter table "geral"."tb_pessoa_fisica" add constraint "tb_pessoa_fisica_em_comunidade_fkey" FOREIGN KEY (em_comunidade) REFERENCES geral.tb_comunidade_usuario(email) not valid;
-
-alter table "geral"."tb_pessoa_fisica" validate constraint "tb_pessoa_fisica_em_comunidade_fkey";
-
+/*
+  DESATIVEI AS SEGUINTES ALTERAÇÕES DEVIDO A MELHOR UTILIZAÇÃO EM VIEW (A JOIN SOMENTE ERA NECESSÁRIA PARA FAZER POR QUERY NO TS)
+    alter table "geral"."tb_pessoa_fisica" add constraint "tb_pessoa_fisica_em_comunidade_fkey" FOREIGN KEY (em_comunidade) REFERENCES geral.tb_comunidade_usuario(email) not valid;
+    alter table "geral"."tb_pessoa_fisica" validate constraint "tb_pessoa_fisica_em_comunidade_fkey";
+*/
 create or replace view "geral"."vw_atualizacoes_usuarios_comunidade_pendente" as  
 SELECT 
   cu.user_id
   , p.co_pessoa_fisica
-  , CONCAT('[' , STRING_AGG(DISTINCT ot.co_comunidade_perfil::varchar, ',') , ']') as lista_perfis
-  , CONCAT('[' 
-    , STRING_AGG(ot.co_comunidade_tag::varchar, ',') 
-    , CASE 
-        WHEN STRING_AGG(DISTINCT o.co_comunidade_tag::varchar, ',') IS NOT NULL
-        THEN ',' || STRING_AGG(DISTINCT o.co_comunidade_tag::varchar, ',')
-        ELSE NULL
-        END
-  , ']') as lista_tags
+  , cu.email as em_comunidade
+  , ARRAY_AGG(DISTINCT ot.co_comunidade_perfil) FILTER (WHERE ot.co_comunidade_perfil IS NOT NULL) as lista_perfis
+  , ARRAY(
+    SELECT DISTINCT unnest(
+      ARRAY_CAT(
+        ARRAY_AGG(DISTINCT ot.co_comunidade_tag),
+        ARRAY_AGG(DISTINCT o.co_comunidade_tag)
+      )
+    )
+    ORDER BY 1
+  ) as lista_tags
+  
+  -- , CONCAT('[' 
+  --   , ARRAY_AGG(ot.co_comunidade_tag::varchar, ',') 
+  --   , CASE 
+  --       WHEN ARRAY_AGG(DISTINCT o.co_comunidade_tag::varchar, ',') IS NOT NULL
+  --       THEN ',' || ARRAY_AGG(DISTINCT o.co_comunidade_tag::varchar, ',')
+  --       ELSE NULL
+  --       END
+  -- , ']') as lista_tags
 
 FROM geral.tb_pessoa_fisica p
 
@@ -71,6 +83,7 @@ WHERE
 GROUP BY 
   cu.user_id
   , p.co_pessoa_fisica
+  , cu.email
 
 -- Deve limitar a 50 (execução das chamadas à Circle deve durar 1 min)
 LIMIT 50
