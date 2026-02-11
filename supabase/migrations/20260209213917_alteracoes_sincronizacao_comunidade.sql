@@ -88,3 +88,12 @@ GROUP BY
 -- Deve limitar a 50 (execução das chamadas à Circle deve durar 1 min)
 LIMIT 50
 ;
+
+
+create extension if not exists "pg_cron" with schema "pg_catalog";
+
+create extension if not exists "pg_net" with schema "public";
+
+drop trigger if exists "protect_buckets_delete" on "storage"."buckets";
+
+drop trigger if exists "protect_objects_delete" on "storage"."objects";
