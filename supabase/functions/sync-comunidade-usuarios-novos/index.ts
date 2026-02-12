@@ -5,12 +5,19 @@ import { job } from "./job.ts"
 
 Deno.serve(async (req) => {
   try {
-    const headers : Headers = req.headers;
-      const headerJobTipo = headers.get('jobTipo');
-      const headerJobTeste = headers.get('jobTeste');
+    const signature = req.headers.get("x-cron-secret");
+    const expected = Deno.env.get("CRON_SECRET");
+
+    if (signature !== expected) {
+      return new Response("Unauthorized", { status: 401 });
+    }  
     
-      const jobTipo : number = headerJobTipo ? parseInt(headerJobTipo) || 0 : 0;
-      const usarMock : boolean = headerJobTeste === 'true';
+    const headers : Headers = req.headers;
+    const headerJobTipo = headers.get('jobTipo');
+    const headerJobTeste = headers.get('jobTeste');
+  
+    const jobTipo : number = headerJobTipo ? parseInt(headerJobTipo) || 0 : 0;
+    const usarMock : boolean = headerJobTeste === 'true';
 
 
   if (jobTipo < 1 && jobTipo > 2) {

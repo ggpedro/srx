@@ -92,7 +92,7 @@ LIMIT 50
 
 create extension if not exists "pg_cron" with schema "pg_catalog";
 
-create extension if not exists "pg_net" with schema "public";
+create extension if not exists "pg_net" with schema "extensions";
 
 drop trigger if exists "protect_buckets_delete" on "storage"."buckets";
 

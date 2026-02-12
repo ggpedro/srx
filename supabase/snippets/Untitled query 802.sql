@@ -1,4 +1,3 @@
-show "request.headers";
 
 -- select net.http_post(
 --     url := 'https://seu-projeto.functions.supabase.co/v1/nome-da-funcao',
