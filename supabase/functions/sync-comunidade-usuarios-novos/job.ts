@@ -26,6 +26,7 @@ export async function job (
     jobTipo : JobTipo 
     , client : CircleClientInterface = new CircleClient()        // Default. Caso informado um mock, ele será utilizado
 ){
+  
     switch (jobTipo) {
         case JobTipo.REGISTRAR_USUARIOS_NOVOS: {
             const novosUsuarios = await identificarNovosUsuarios(client);

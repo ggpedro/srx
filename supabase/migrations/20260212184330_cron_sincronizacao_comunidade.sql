@@ -12,8 +12,8 @@ select
         headers := jsonb_build_object(
           'Host','127.0.0.1:54321',
           'Content-Type','application/json',
-          'Authorization','Bearer sb_publishable_ACJWlzQHlZjBrEguHvfOxg_3BJgxAaH',
-          'api_key','sb_publishable_ACJWlzQHlZjBrEguHvfOxg_3BJgxAaH',
+          'Authorization','Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0',
+          'api_key','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0',
           'x-cron-secret','DSAOIJ328FJ343disjfa83D@fastdgfs@af1,.431DSLLSssreFD434fdGA..SR',
           'jobTipo','1',
           'jobTeste','true'
