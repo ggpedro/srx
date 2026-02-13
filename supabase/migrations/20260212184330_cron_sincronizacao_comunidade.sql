@@ -157,20 +157,23 @@
 
 /*
   DEFINIÇÃO DOS CRONS
+
+  Deixei comentado pois CRONs precisam de execução diferente, garantindo que rodem apenas em produção
+    ... no caso do Circle, o plano que temos não possui ambiente staging e, por isso, não podemos deixar consumindo tokens em PRD
 */
 
 -- -- CRON 1: Rodar atualização dos novos usuários às 12h e 00h
 -- select cron.schedule(
 --   'sync-comunidade-importar-novos-usuarios',
 --   '0 0,12 * * *',
---   $$ select private.job_sync_comunidade(1, true); $$
+--   $$ select private.job_sync_comunidade(1, false); $$
 -- );
 
--- -- CRON 2: Subir ao circle as permissões e tags devidas de cada usuário
+-- -- CRON 2: Subir ao circle as permissões e tags devidas de cada usuário, a cada 2 minutos das 12h às 13h e das 00h às 01h
 -- select cron.schedule(
---   'sync-comunidade-importar-novos-usuarios',
+--   'sync-comunidade-sincronizar-novos-usuarios',
 --   '*/2 0,12 * * *',
---   $$ select private.job_sync_comunidade(1, true); $$
+--   $$ select private.job_sync_comunidade(2, false); $$
 -- );
 
 

@@ -486,3 +486,161 @@ ALTER DEFAULT PRIVILEGES IN SCHEMA geral GRANT ALL ON TABLES TO anon, authentica
 
 
 drop extension if exists "pg_net";
+
+/*
+  Alterações feitas para servir ao propósito da comunidade
+*/
+
+alter table "geral"."tb_organizacao" drop constraint "tb_organizacao_sg_organizacao_embrapii_fkey";
+
+alter table "geral"."tp_organizacao" drop constraint "tp_organizacao_pkey";
+
+alter table "geral"."tp_organizacao_embrapii" drop constraint "tp_organizacao_embrapii_pkey";
+
+drop index if exists "geral"."tp_organizacao_embrapii_pkey";
+
+drop index if exists "geral"."tp_organizacao_pkey";
+
+drop table "geral"."tp_organizacao";
+
+drop table "geral"."tp_organizacao_embrapii";
+
+
+  create table "geral"."tp_organizacao_tipo" (
+    "sg_organizacao_tipo" character varying not null,
+    "created_at" timestamp with time zone not null default now(),
+    "no_organizacao_tipo" character varying not null,
+    "ds_organizacao_tipo" character varying,
+    "sg_esfera_publica" character varying
+      );
+
+
+alter table "geral"."tb_organizacao" drop column "sg_organizacao_embrapii";
+
+alter table "geral"."tb_organizacao" add column "sg_organizacao_tipo" character varying;
+
+CREATE UNIQUE INDEX tp_organizacao_tipo_pkey ON geral.tp_organizacao_tipo USING btree (sg_organizacao_tipo);
+
+alter table "geral"."tp_organizacao_tipo" add constraint "tp_organizacao_tipo_pkey" PRIMARY KEY using index "tp_organizacao_tipo_pkey";
+alter table "geral"."tp_organizacao_tipo" add column "co_comunidade_tag" int8;
+alter table "geral"."tp_organizacao_tipo" add column "co_comunidade_perfil" int8;
+alter table "geral"."tb_organizacao" add column "co_comunidade_tag" int8;
+-- alter table "geral"."tb_organizacao" add column "co_comunidade_perfil" int8;
+
+alter table "geral"."tb_organizacao" add constraint "tb_organizacao_sg_organizacao_tipo_fkey" FOREIGN KEY (sg_organizacao_tipo) REFERENCES geral.tp_organizacao_tipo(sg_organizacao_tipo) not valid;
+
+alter table "geral"."tb_organizacao" validate constraint "tb_organizacao_sg_organizacao_tipo_fkey";
+
+alter table "geral"."rl_organizacao_cargo" enable row level security;
+
+alter table "geral"."rl_permissao_cargo" enable row level security;
+
+alter table "geral"."tb_credenciamento" enable row level security;
+
+alter table "geral"."tb_organizacao" enable row level security;
+
+alter table "geral"."tp_cargo" enable row level security;
+
+alter table "geral"."tp_organizacao_tipo" enable row level security;
+
+alter table "geral"."tp_permissao" enable row level security;
+
+alter table "geral"."rl_organizacao_cargo" add column "dt_atualizacao" timestamp without time zone;
+
+alter table "geral"."rl_permissao_cargo" add column "dt_atualizacao" timestamp without time zone;
+
+alter table "geral"."tb_comunidade_usuario" drop column "co_pessoa";
+
+alter table "geral"."tb_comunidade_usuario" drop column "dt_atribuicoes";
+
+alter table "geral"."tb_comunidade_usuario" drop column "list_atribuicoes";
+
+alter table "geral"."tb_comunidade_usuario" add column "co_pessoa_fisica" bigint;
+
+alter table "geral"."tb_comunidade_usuario" add column "dt_atualizacao" timestamp without time zone;
+
+alter table "geral"."tb_comunidade_usuario" add column "list_perfis" json;
+
+alter table "geral"."tb_comunidade_usuario" add column "st_atualizando" boolean;
+
+alter table "geral"."tb_comunidade_usuario" alter column "list_member_tags" set data type json using "list_member_tags"::json;
+
+alter table "geral"."tb_pessoa_fisica" add column "dt_atualizacao" timestamp without time zone;
+
+CREATE UNIQUE INDEX tb_comunidade_usuario_email_key ON geral.tb_comunidade_usuario USING btree (email);
+
+CREATE UNIQUE INDEX tb_pessoa_fisica_co_cpf_key ON geral.tb_pessoa_fisica USING btree (co_cpf);
+
+alter table "geral"."tb_comunidade_usuario" add constraint "tb_comunidade_usuario_email_key" UNIQUE using index "tb_comunidade_usuario_email_key";   
+
+alter table "geral"."tb_pessoa_fisica" add constraint "tb_pessoa_fisica_co_cpf_key" UNIQUE using index "tb_pessoa_fisica_co_cpf_key";
+
+/*
+  DESATIVEI AS SEGUINTES ALTERAÇÕES DEVIDO A MELHOR UTILIZAÇÃO EM VIEW (A JOIN SOMENTE ERA NECESSÁRIA PARA FAZER POR QUERY NO TS)
+    alter table "geral"."tb_pessoa_fisica" add constraint "tb_pessoa_fisica_em_comunidade_fkey" FOREIGN KEY (em_comunidade) REFERENCES geral.tb_comunidade_usuario(email) not valid;
+    alter table "geral"."tb_pessoa_fisica" validate constraint "tb_pessoa_fisica_em_comunidade_fkey";
+*/
+create or replace view "geral"."vw_atualizacoes_usuarios_comunidade_pendente" as  
+SELECT 
+  cu.user_id
+  , p.co_pessoa_fisica
+  , cu.email as em_comunidade
+  , ARRAY_AGG(DISTINCT ot.co_comunidade_perfil) FILTER (WHERE ot.co_comunidade_perfil IS NOT NULL) as lista_perfis
+  , ARRAY(
+    SELECT DISTINCT unnest(
+      ARRAY_CAT(
+        ARRAY_AGG(DISTINCT ot.co_comunidade_tag),
+        ARRAY_AGG(DISTINCT o.co_comunidade_tag)
+      )
+    )
+    ORDER BY 1
+  ) as lista_tags
+  
+  -- , CONCAT('[' 
+  --   , ARRAY_AGG(ot.co_comunidade_tag::varchar, ',') 
+  --   , CASE 
+  --       WHEN ARRAY_AGG(DISTINCT o.co_comunidade_tag::varchar, ',') IS NOT NULL
+  --       THEN ',' || ARRAY_AGG(DISTINCT o.co_comunidade_tag::varchar, ',')
+  --       ELSE NULL
+  --       END
+  -- , ']') as lista_tags
+
+FROM geral.tb_pessoa_fisica p
+
+  LEFT JOIN geral.rl_organizacao_cargo oc
+    USING (co_pessoa_fisica)
+  LEFT JOIN geral.tb_comunidade_usuario cu
+    ON cu.email = p.em_comunidade
+  
+  LEFT JOIN geral.tb_organizacao o
+    USING (co_organizacao)
+  LEFT JOIN geral.tp_organizacao_tipo ot
+    USING (sg_organizacao_tipo)
+
+WHERE 
+  1=1
+  AND (
+    (
+      greatest(p.dt_atualizacao, oc.dt_atualizacao) >= cu.dt_atualizacao    -- Teve atualização da pessoa ou cargo
+      OR cu.dt_atualizacao IS NULL                                          -- ... ou ainda não teve nenhuma atualizacao
+    )
+    AND cu.st_atualizando IS NOT TRUE                                       -- ... e não está atualizando no momento
+  )
+
+GROUP BY 
+  cu.user_id
+  , p.co_pessoa_fisica
+  , cu.email
+
+-- Deve limitar a 50 (execução das chamadas à Circle deve durar 1 min)
+LIMIT 50
+;
+
+
+create extension if not exists "pg_cron" with schema "pg_catalog";
+
+create extension if not exists "pg_net" with schema "extensions";
+
+drop trigger if exists "protect_buckets_delete" on "storage"."buckets";
+
+drop trigger if exists "protect_objects_delete" on "storage"."objects";

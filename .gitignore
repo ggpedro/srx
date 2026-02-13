@@ -1,3 +1,3 @@
 node_modules/
 .env
-supabase/seeds/secrets.sql
+supabase/seeds/secrets.txt

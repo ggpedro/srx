@@ -11,8 +11,8 @@ INSERT INTO private.hosts(
 VALUES (
     1
     , 'kong:8000'
-    , ''
     , 'vkkyebyiglgqhayxjzkz.supabase.co'
+    , 'fkkszldnrgwxqcgnddux.supabase.co'
 );
 
 INSERT INTO GERAL.TP_CARGO (
