@@ -1,3 +1,20 @@
+/*
+    HOSTS - PADRÃO
+*/
+
+INSERT INTO private.hosts(
+    id
+    , loc
+    , dev
+    , prd
+)
+VALUES (
+    1
+    , 'kong:8000'
+    , ''
+    , 'vkkyebyiglgqhayxjzkz.supabase.co'
+);
+
 INSERT INTO GERAL.TP_CARGO (
     SG_CARGO
     , SG_CARGO_SUPERIOR
