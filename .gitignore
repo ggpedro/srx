@@ -1,3 +1,4 @@
 node_modules/
 .env
+.temp
 supabase/seeds/secrets.txt
