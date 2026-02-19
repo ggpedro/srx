@@ -16,9 +16,10 @@ export async function identificarPerfis() {
     .schema('geral')
     .from('vw_atualizacoes_usuarios_comunidade_pendente')
     .select(`*`)
+    .not('user_id', 'is', null)
     ;
 
-  console.log('VIEW: '+JSON.stringify(data));
+  console.log(`${path} | Execução de sincronização do lote: ${JSON.stringify(data)}`);
 
   // console.log(data);
   if (error) throw error;
@@ -75,6 +76,11 @@ async function sincronizarUsuario (usuario : tbComunidadeUsuario){
   const circle = new CircleClient();
   const resultado = [];
   
+  // Se não tiver um user_id significa que não tem registro na comunidade ainda
+  if (!usuario.user_id){
+    return null;
+  }
+
   // Atualização das tags
   const atualizacaoTags = await circle.atualizarUsuario(usuario.user_id, usuario.lista_tags ?? [] );    // Não deve ter lista vazia, uma vez que na querie sempre há
   const emailUsuario : string = usuario.em_comunidade ?? usuario.email ?? '';
