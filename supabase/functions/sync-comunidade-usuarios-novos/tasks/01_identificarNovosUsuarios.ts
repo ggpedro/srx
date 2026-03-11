@@ -8,7 +8,7 @@ import {tbComunidadeUsuario} from '../../interfaces/schemaGeral.ts'
 export async function identificarNovosUsuarios (client: CircleClientInterface){
     const path = new URL(import.meta.url).pathname;       // Path para debug
     
-    const fetchUsuarios = await client.fetchUsuarios();
+    const fetchUsuarios = await client.fetchUsuarios(1);
     const ultimosUsuariosComunidade : UserRecord[] = fetchUsuarios.records;
         const idsUltimosUsuariosComunidade : number[] = ultimosUsuariosComunidade.map (i => i.id);
         

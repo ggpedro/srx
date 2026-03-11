@@ -1,7 +1,7 @@
 // import { mockErrors } from "asset:///node/undici/index.d.ts";
 
 export interface CircleClientInterface {
-  fetchUsuarios(): Promise<PaginatedResponse>;
+  fetchUsuarios(page : number): Promise<PaginatedResponse>;
 }
 
 export interface PaginatedResponse {

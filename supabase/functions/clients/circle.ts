@@ -11,8 +11,8 @@ export class CircleClient implements CircleClientInterface {
     'Accept': 'application/json',
   }
 
-  async fetchUsuarios () : Promise<PaginatedResponse> {
-    const endpoint = '/v2/community_members?page=1&per_page=1000';
+  async fetchUsuarios (page:number) : Promise<PaginatedResponse> {
+    const endpoint = `/v2/community_members?page=${page}&per_page=1000`;
     
     const requestOptions : RequestInit = {
       method: "GET",

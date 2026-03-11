@@ -619,9 +619,10 @@ FROM geral.tb_pessoa_fisica p
 
 WHERE 
   1=1
+  AND cu.user_id is not null                                              -- Que já entrou na comunidade
   AND (
     (
-      greatest(p.dt_atualizacao, oc.dt_atualizacao) >= cu.dt_atualizacao    -- Teve atualização da pessoa ou cargo
+      greatest(p.dt_atualizacao, oc.dt_atualizacao) >= cu.dt_atualizacao    -- ... teve atualização da pessoa ou cargo
       OR cu.dt_atualizacao IS NULL                                          -- ... ou ainda não teve nenhuma atualizacao
     )
     AND cu.st_atualizando IS NOT TRUE                                       -- ... e não está atualizando no momento
