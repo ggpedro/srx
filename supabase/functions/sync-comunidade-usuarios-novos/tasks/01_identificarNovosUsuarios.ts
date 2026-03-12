@@ -8,9 +8,19 @@ import {tbComunidadeUsuario} from '../../interfaces/schemaGeral.ts'
 export async function identificarNovosUsuarios (client: CircleClientInterface){
     const path = new URL(import.meta.url).pathname;       // Path para debug
     
-    const fetchUsuarios = await client.fetchUsuarios(1);
-    const ultimosUsuariosComunidade : UserRecord[] = fetchUsuarios.records;
-        const idsUltimosUsuariosComunidade : number[] = ultimosUsuariosComunidade.map (i => i.id);
+    // Requisição para a primeira página
+    let page = 1;
+    let fetchUsuarios = await client.fetchUsuarios(page);
+    const allRecords = fetchUsuarios.records;
+
+    while (fetchUsuarios.has_next_page){
+        page++
+        fetchUsuarios = await client.fetchUsuarios(page);        
+        allRecords.push(...fetchUsuarios.records);
+    }
+
+    // const ultimosUsuariosComunidade : UserRecord[] = allRecords;
+        const idsUltimosUsuariosComunidade : number[] = allRecords.map (i => i.id);
         
     const {data, error} = await supaService
         .schema('geral')
@@ -25,7 +35,7 @@ export async function identificarNovosUsuarios (client: CircleClientInterface){
 
     try {
         const usuariosSalvos : number[] = data.map( u=> u.user_id);
-        const usuariosNaoSalvos : UserRecord[] = ultimosUsuariosComunidade.filter (u => !usuariosSalvos?.includes(u.id));
+        const usuariosNaoSalvos : UserRecord[] = allRecords.filter (u => !usuariosSalvos?.includes(u.id));
 
         const upsertNovosUsuarios : tbComunidadeUsuario[] = [];
             usuariosNaoSalvos.map( u => {
